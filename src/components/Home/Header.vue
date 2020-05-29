@@ -1,0 +1,59 @@
+<template>
+  <div class="header">
+    <div class="header-left iconfont icon-arrow-left">
+    </div>
+    <div class="header-input">
+      <span class="iconfont icon-search"></span>
+      输入城市/景点/游玩主题
+    </div>
+    <div class="header-right">
+      城市
+      <span class="iconfont icon-arrow-down"></span>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'HomeHeader'
+}
+</script>
+
+<style scoped lang="stylus">
+  @import "../../assets/css/varibles.styl"
+  .header {
+    display: flex;
+    line-height: .86rem
+    background-color: $bgColor
+    color: #fff
+
+    .header-left {
+      float: left;
+      width: .64rem
+    }
+
+    .header-input {
+      flex: 1;
+      height: .64rem;
+      line-height: .64rem;
+      margin-top: .12rem;
+      margin-left: .2rem;
+      padding-left: .1rem;
+      border-radius: 5px;
+      background: #fff;
+      color: #ccc;
+    }
+
+    .header-right {
+      float: right;
+      width: 1.24rem;
+      text-align: center
+    }
+  }
+
+  .icon-arrow-left {
+    text-align: center;
+    font-size: .4rem;
+  }
+
+</style>
