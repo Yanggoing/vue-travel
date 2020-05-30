@@ -8,7 +8,7 @@
     </div>
     <router-link to="/city">
       <div class="header-right">
-        {{this.city}}
+        上海
         <span class="iconfont icon-arrow-down"></span>
       </div>
     </router-link>
