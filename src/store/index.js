@@ -1,7 +1,4 @@
-import Vue from 'vue'
 import Vuex from 'vuex'
-
-Vue.use(Vuex)
 
 let defalutCity = '上海'
 try {
@@ -12,7 +9,7 @@ try {
 
 }
 
-export default new Vuex.Store({
+export default Vuex.createStore({
   state: {
     city: defalutCity
   },
