@@ -9,6 +9,7 @@
 
 <script>
 import { ref, reactive, onMounted } from 'vue'
+import axios from 'axios'
 import CityHeader from './Header'
 import CitySearch from './Search'
 import CityList from './List'
@@ -34,7 +35,7 @@ const useCityLogic = () => {
     hotCities: []
   })
   const getCityInfo = async () => {
-    let res = await this.axios.get('/api/city.json')
+    let res = await axios.get('/api/city.json')
     res = res.data
     if (res.ret && res.data) {
       const result = res.data

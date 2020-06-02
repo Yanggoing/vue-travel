@@ -27,12 +27,5 @@ export default Vuex.createStore({
     doubleCity (state) {
       return state.city + '' + state.city
     }
-  },
-  actions: {
-    // changeCity (ctx, city) {
-    //   ctx.commit('changeCity', city)
-    // }
-  },
-  modules: {
   }
 })

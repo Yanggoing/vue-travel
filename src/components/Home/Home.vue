@@ -1,10 +1,10 @@
 <template>
   <div>
     <home-header></home-header>
-    <home-swiper :list="data.swiperList"></home-swiper>
-    <home-icons :list="data.iconList"></home-icons>
-    <home-recommend :list="data.recommendList"></home-recommend>
-    <home-weekend :list="data.weekendList"></home-weekend>
+    <home-swiper :list="swiperList"></home-swiper>
+    <home-icons :list="iconList"></home-icons>
+    <home-recommend :list="recommendList"></home-recommend>
+    <home-weekend :list="weekendList"></home-weekend>
   </div>
 </template>
 
@@ -16,6 +16,7 @@ import HomeRecommend from './Recommond'
 import HomeWeekend from './Weekend'
 import { useStore } from 'vuex'
 import { ref, onMounted } from 'vue'
+import axios from 'axios'
 
 export default {
   name: 'Home',
@@ -39,7 +40,7 @@ export default {
     const city = store.state.city
 
     const getHomeInfo = async () => {
-      let res = await this.axios.get('/api/index.json?city=' + city)
+      let res = await axios.get('/api/index.json?city=' + city)
       res = res.data
       if (res.ret && res.data) {
         const result = res.data

@@ -50,12 +50,12 @@ export default {
     hot: Array,
     letter: String
   },
-  setup () {
+  setup (props) {
     const store = useStore()
     const router = useRouter()
     const currentCity = store.state.city
-    const elem = ref({})
-    const scroll = null
+    const elems = ref({})
+    let scroll = null
     const wrapper = ref(null)
     const handleCityClick = (city) => {
       store.commit('changeCity', city)
@@ -63,34 +63,16 @@ export default {
     }
     watch(() => props.letter, (letter, prevLetter) => {
       if (letter && scroll) {
-        const element = elem.value[letter]
-        this.scroll.scrollToElement(element)
+        const element = elems.value[letter]
+        scroll.scrollToElement(element)
       }
     })
     onMounted(() => {
-      this.scroll = new BScroll(wrapper.value, {
+      scroll = new BScroll(wrapper.value, {
         click: true
       })
     })
-    return { currentCity, elem, handleCityClick, wrapper }
-  },
-
-  methods: {
-    ...mapMutations(['changeCity']),
-    handleCityClick (city) {
-      this.changeCity(city)
-      this.$router.push('/home')
-    }
-  },
-  mounted () {
-    this.scroll = new BScroll(this.$refs.wrapper, {
-      click: true
-    })
-  },
-  watch: {
-    letter () {
-
-    }
+    return { currentCity, elems, handleCityClick, wrapper }
   }
 }
 </script>

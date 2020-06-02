@@ -10,7 +10,8 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
+import axios from 'axios'
 import DetailBanner from './Banner'
 import DetailHeader from './Header'
 import DetailList from './List'
@@ -22,18 +23,16 @@ export default {
     DetailList
   },
   setup () {
-    const route = useRouter()
+    const route = useRoute()
     const sightName = ref('')
     const bannerImg = ref('')
     const gallaryImgs = ref([])
     const list = ref([])
 
     const getDetailInfo = async () => {
-      let res = await this.axios.get('/api/detail.json', {
-        params: {
-          id: route.params.id
-        }
-      })
+      let res = await axios.get('/api/detail.json', {
+        params: { id: route.params.id}
+      });
       res = res.data
       if (res.ret && res.data) {
         const data = res.data

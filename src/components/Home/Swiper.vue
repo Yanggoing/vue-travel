@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper">
-    <swiper ref="mySwiper" :options="swiperOptions" v-if="showSwiper">
+    <swiper :options="swiperOptions" v-if="showSwiper">
       <swiper-slide :key="item.id" v-for="item of list">
         <img class="swiper-img" :src="item.imgUrl">
       </swiper-slide>
-      <div class="swiper-pagination" slot="pagination" ></div>
+      <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
   </div>
 </template>

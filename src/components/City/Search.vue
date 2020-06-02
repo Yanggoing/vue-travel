@@ -37,11 +37,11 @@ export default {
     const router = useRouter()
     const keyword = ref('')
     const list = ref([])
-    const timer = ref(null)
+    let timer = ref(null)
     const search = ref(null)
     const hasNoData = computed(() => !list.length)
     watch(keyword, (keyword, prevKeyword) => {
-      if (timer) {
+      if (timer.value) {
         clearTimeout(timer)
         timer = null
       }
@@ -66,9 +66,8 @@ export default {
       router.push('/home')
     }
     onMounted(() => {
-      new BScroll(search.value, {
-        click: true
-      })
+      // eslint-disable-next-line no-new
+      new BScroll(search.value, { click: true })
     })
     return { keyword, list, hasNoData, handleCityClick, search }
   }

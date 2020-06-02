@@ -5,7 +5,7 @@
         :key="item"
         :ref="elem => elems[item] = elem"
         @click="handleLetterClick"
-        @touchstart.prevent="handleTouchStart"
+        @touchstart="handleTouchStart"
         @touchmove="handleTouchMove"
         @touchend="handleTouchEnd"
     >
@@ -30,17 +30,14 @@ export default {
 
     const letters = computed(() => {
       const letters = []
-      for (const i in this.cities) {
-        // eslint-disable-next-line no-prototype-builtins
-        if (props.cities.hasOwnProperty(i)) {
+      for (let i in props.cities) {
           letters.push(i)
-        }
       }
       return letters
     })
 
     onUpdated(() => {
-      startY = elems.value.A.offsetTop
+      startY = elems.value['A'].offsetTop
     })
 
     const handleLetterClick = (e) => {
@@ -56,7 +53,7 @@ export default {
         }
         timer = setTimeout(() => {
           const touchY = e.touches[0].clientY - 79
-          const index = Math.floor((touchY - this.startY) / 20)
+          const index = Math.floor((touchY - startY) / 20)
           if (index >= 0 && index < letters.value.length) {
             context.emit('change', letters.value[index])
           }
