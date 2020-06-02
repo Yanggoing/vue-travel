@@ -4,7 +4,7 @@
       <swiper-slide :key="item.id" v-for="item of list">
         <img class="swiper-img" :src="item.imgUrl">
       </swiper-slide>
-      <div class="swiper-pagination" slot="pagination"></div>
+      <div class="swiper-pagination" slot="pagination" ></div>
     </swiper>
   </div>
 </template>
@@ -13,13 +13,13 @@
 import { computed } from 'vue'
 export default {
   name: 'HomeSwiper',
+  props: {
+    list: Array
+  },
   setup (props) {
     const swiperOptions = {
-      pagination: {
-        el: '.swiper-pagination'
-      },
-      loop: true,
-      autoplay: true
+      pagination: '.swiper-pagination',
+      loop: true
     }
     const showSwiper = computed(() => props.list.length)
     return { swiperOptions, showSwiper }
