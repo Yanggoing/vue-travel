@@ -1,24 +1,24 @@
-# vue-travel
+# Vue去哪儿旅行
 
-## Project setup
-```
-npm install
-```
+## 简介
+仿去哪儿网移动端首页及购票页面
+实现了城市选择 城市搜索 轮播图 景点详情页面 图片画廊展示等主要功能，优化了部分样式代码
+在Vue3.0分支中使用Vue3.0中Composition API对项目进行重构，使得逻辑分离复用 并得到更好的代码组织，便于更改和维护
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 效果（真机测试图）
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 首页
+
+
+### 城市选择页面
+
+
+
+### 景点详情页面
+
+
+
+### 详情页面画廊展示
+
