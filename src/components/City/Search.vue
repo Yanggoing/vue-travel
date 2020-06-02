@@ -24,55 +24,53 @@
 
 <script>
 import BScroll from 'better-scroll'
-import { mapMutations } from 'vuex'
+import { ref, computed, watch, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 export default {
   name: 'CitySearch',
   props: {
     cities: Object
   },
-  data () {
-    return {
-      keyword: '',
-      list: [],
-      timer: null
-    }
-  },
-  methods: {
-    ...mapMutations(['changeCity']),
-    handleCityClick (city) {
-      this.changeCity(city)
-      this.$router.push('/home')
-    }
-  },
-  mounted () {
-    this.scroll = new BScroll(this.$refs.search)
-  },
-  computed: {
-    hasNoData () {
-      return !this.list.length
-    }
-  },
-  watch: {
-    keyword () {
-      if (this.timer) {
-        clearTimeout(this.timer)
+  setup (props) {
+    const store = useStore()
+    const router = useRouter()
+    const keyword = ref('')
+    const list = ref([])
+    const timer = ref(null)
+    const search = ref(null)
+    const hasNoData = computed(() => !list.length)
+    watch(keyword, (keyword, prevKeyword) => {
+      if (timer) {
+        clearTimeout(timer)
+        timer = null
       }
-      if (!this.keyword) {
-        this.list.length = 0
+      if (!keyword) {
+        list.value = []
         return
       }
-      this.timer = setTimeout(() => {
+      timer = setTimeout(() => {
         const result = []
-        for (const i in this.cities) {
-          this.cities[i].forEach(item => {
-            if (item.spell.indexOf(this.keyword) > -1 || item.name.indexOf(this.keyword) > -1) {
+        for (const i in props.cities) {
+          props.cities[i].forEach(item => {
+            if (item.spell.indexOf(keyword) > -1 || item.name.indexOf(keyword) > -1) {
               result.push(item)
             }
           })
         }
-        this.list = result
+        list.value = result
       }, 100)
+    })
+    const handleCityClick = city => {
+      store.commit('changeCity', city)
+      router.push('/home')
     }
+    onMounted(() => {
+      new BScroll(search.value, {
+        click: true
+      })
+    })
+    return { keyword, list, hasNoData, handleCityClick, search }
   }
 }
 </script>

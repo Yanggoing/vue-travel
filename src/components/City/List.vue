@@ -22,7 +22,7 @@
           </div>
         </div>
       </div>
-      <div class="area" :ref="key" v-for="(item,key) of cities" :key="key">
+      <div class="area" :ref="elem => elems[key] = elem" v-for="(item,key) of cities" :key="key">
         <div class="title border-topbottom">{{key}}</div>
         <div class="item-list">
           <div class="item border-bottom"
@@ -40,7 +40,9 @@
 
 <script>
 import BScroll from 'better-scroll'
-import { mapState, mapMutations } from 'vuex'
+import { ref, watch, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 export default {
   name: 'CityList',
   props: {
@@ -48,11 +50,31 @@ export default {
     hot: Array,
     letter: String
   },
-  computed: {
-    ...mapState({
-      currentCity: 'city'
+  setup () {
+    const store = useStore()
+    const router = useRouter()
+    const currentCity = store.state.city
+    const elem = ref({})
+    const scroll = null
+    const wrapper = ref(null)
+    const handleCityClick = (city) => {
+      store.commit('changeCity', city)
+      router.push('/home')
+    }
+    watch(() => props.letter, (letter, prevLetter) => {
+      if (letter && scroll) {
+        const element = elem.value[letter]
+        this.scroll.scrollToElement(element)
+      }
     })
+    onMounted(() => {
+      this.scroll = new BScroll(wrapper.value, {
+        click: true
+      })
+    })
+    return { currentCity, elem, handleCityClick, wrapper }
   },
+
   methods: {
     ...mapMutations(['changeCity']),
     handleCityClick (city) {
@@ -67,10 +89,7 @@ export default {
   },
   watch: {
     letter () {
-      if (this.letter) {
-        const element = this.$refs[this.letter]
-        this.scroll.scrollToElement(element)
-      }
+
     }
   }
 }

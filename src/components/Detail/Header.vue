@@ -5,7 +5,7 @@
       </div>
     </router-link>
     <div class="header-fixed" v-show="!showAbs" :style="opacityStyle">
-      <router-link to="/home" class="header-fixed-back iconfont icon-arrow-left" >
+      <router-link to="/home" class="header-fixed-back iconfont icon-arrow-left">
       </router-link>
       景点详情
     </div>
@@ -13,36 +13,33 @@
 </template>
 
 <script>
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
+
 export default {
   name: 'DetailHeader',
-  data () {
-    return {
-      showAbs: true,
-      opacityStyle: {
-        opacity: 0
-      }
-    }
-  },
-  methods: {
-    handleScroll () {
+  setup () {
+    const showAbs = ref(true)
+    const opacityStyle = reactive({
+      opacity: 0
+    })
+    const handleScroll = () => {
       const top = document.documentElement.scrollTop || document.body.scrollTop || window.pageXOffset
       if (top > 60) {
         let opacity = top / 140
         opacity = opacity > 1 ? 1 : opacity
-        this.opacityStyle = {
-          opacity
-        }
-        this.showAbs = false
+        opacityStyle.opacity = opacity
+        showAbs.value = false
       } else {
-        this.showAbs = true
+        showAbs.value = true
       }
     }
-  },
-  mounted () {
-    window.addEventListener('scroll', this.handleScroll)
-  },
-  destroyed () {
-    window.removeEventListener('scroll', this.handleScroll)
+    onMounted(() => {
+      window.addEventListener('scroll', handleScroll)
+    })
+    onUnmounted(() => {
+      window.removeEventListener('scroll', handleScroll)
+    })
+    return { showAbs, opacityStyle }
   }
 }
 </script>
